@@ -1,7 +1,21 @@
-## Robot Package Template
+## Articubot One
 
-This is a GitHub template. You can make your own copy by clicking the green "Use this template" button.
+This package is set up for ROS 2 Kilted Kaiju with Gazebo Ionic.
 
-It is recommended that you keep the repo/package name the same, but if you do change it, ensure you do a "Find all" using your IDE (or the built-in GitHub IDE by hitting the `.` key) and rename all instances of `my_bot` to whatever your project's name is.
+Simulation now uses:
 
-Note that each directory currently has at least one file in it to ensure that git tracks the files (and, consequently, that a fresh clone has direcctories present for CMake to find). These example files can be removed if required (and the directories can be removed if `CMakeLists.txt` is adjusted accordingly).
+- `ros_gz_sim` to launch Gazebo and spawn the robot from `robot_description`
+- `gz_ros2_control` for simulated ros2_control hardware
+- `ros_gz_bridge` and `ros_gz_image` to bridge `/clock`, lidar, and camera topics into ROS 2
+
+Run the simulator with:
+
+```bash
+ros2 launch articubot_one launch_sim.launch.py
+```
+
+To load a different packaged world:
+
+```bash
+ros2 launch articubot_one launch_sim.launch.py world:=obstacles.world
+```
