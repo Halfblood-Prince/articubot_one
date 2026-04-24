@@ -1,6 +1,6 @@
 ## Articubot One
 
-This package is set up for ROS 2 Kilted Kaiju with Gazebo Ionic.
+This package is set up for ROS 2 Jazzy Jalisco with Gazebo Ionic.
 
 Simulation now uses:
 
