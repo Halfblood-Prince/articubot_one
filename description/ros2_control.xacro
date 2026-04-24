@@ -56,11 +56,13 @@
         </ros2_control>
     </xacro:if>
 
-    <gazebo>
-        <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-            <parameters>$(find articubot_one)/config/my_controllers.yaml</parameters>
-            <parameters>$(find articubot_one)/config/gaz_ros2_ctl_use_sim.yaml</parameters>
-        </plugin>
-    </gazebo>
+    <xacro:if value="${sim_mode and use_ros2_control}">
+        <gazebo>
+            <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+                <parameters>$(find articubot_one)/config/my_controllers.yaml</parameters>
+                <parameters>$(find articubot_one)/config/gaz_ros2_ctl_use_sim.yaml</parameters>
+            </plugin>
+        </gazebo>
+    </xacro:if>
 
 </robot>

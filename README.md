@@ -14,6 +14,12 @@ Run the simulator with:
 ros2 launch articubot_one launch_sim.launch.py
 ```
 
+If `gz_ros2_control` or `controller_manager` is not installed in your ROS environment yet, you can still bring up Gazebo, sensors, and the robot model without control by running:
+
+```bash
+ros2 launch articubot_one launch_sim.launch.py use_ros2_control:=false
+```
+
 To load a different packaged world:
 
 ```bash
