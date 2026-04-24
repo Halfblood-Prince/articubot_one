@@ -14,6 +14,18 @@ Run the simulator with:
 ros2 launch articubot_one launch_sim.launch.py
 ```
 
+Keyboard teleop (separate terminal)
+
+To drive the robot from your keyboard (run this in another terminal after launching the simulator):
+
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r cmd_vel:=/cmd_vel_joy
+```
+
+Notes:
+- `launch_sim.launch.py` launches SLAM by default (`use_slam:=true`). SLAM parameters live in `config/mapper_params_online_async.yaml`.
+- To save a built map after running SLAM, use your preferred map saver (for example `ros2 run nav2_map_server map_saver_cli -f my_map`).
+
 If `gz_ros2_control` or `controller_manager` is not installed in your ROS environment yet, you can still bring up Gazebo, sensors, and the robot model without control by running:
 
 ```bash
