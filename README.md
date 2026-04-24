@@ -1,10 +1,10 @@
 ## Articubot One
 
-This package is set up for ROS 2 Jazzy Jalisco with Gazebo Ionic.
+This package is set up for ROS 2 Jazzy Jalisco with Gazebo (gz sim).
 
 Simulation now uses:
 
-- `ros_gz_sim` to launch Gazebo and spawn the robot from `robot_description`
+- `ros_gz_sim` to launch `gz sim` (Gazebo) and spawn the robot from `robot_description`
 - `gz_ros2_control` for simulated ros2_control hardware
 - `ros_gz_bridge` and `ros_gz_image` to bridge `/clock`, lidar, and camera topics into ROS 2
 
@@ -12,6 +12,16 @@ Run the simulator with:
 
 ```bash
 ros2 launch articubot_one launch_sim.launch.py
+```
+
+Or run the simulator directly with `gz sim` (start the simulator first, then spawn the robot):
+
+```bash
+# from the repo root or installed share location:
+gz sim worlds/empty.world
+
+# then in another terminal spawn the robot from the robot_description topic
+ros2 run ros_gz_sim create -topic /robot_description -name my_bot -z 0.1
 ```
 
 Keyboard teleop (separate terminal)
@@ -26,7 +36,7 @@ Notes:
 - `launch_sim.launch.py` launches SLAM by default (`use_slam:=true`). SLAM parameters live in `config/mapper_params_online_async.yaml`.
 - To save a built map after running SLAM, use your preferred map saver (for example `ros2 run nav2_map_server map_saver_cli -f my_map`).
 
-If `gz_ros2_control` or `controller_manager` is not installed in your ROS environment yet, you can still bring up Gazebo, sensors, and the robot model without control by running:
+If `gz_ros2_control` or `controller_manager` is not installed in your ROS environment yet, you can still bring up Gazebo (gz sim), sensors, and the robot model without control by running:
 
 ```bash
 ros2 launch articubot_one launch_sim.launch.py use_ros2_control:=false

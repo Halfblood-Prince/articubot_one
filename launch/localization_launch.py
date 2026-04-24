@@ -69,7 +69,7 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             'use_sim_time', default_value='false',
-            description='Use simulation (Gazebo) clock if true'),
+            description='Use simulation (gz sim) clock if true'),
 
         DeclareLaunchArgument(
             'autostart', default_value='true',

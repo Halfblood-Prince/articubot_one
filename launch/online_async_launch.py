@@ -18,7 +18,7 @@ def generate_launch_description():
     declare_use_sim_time_argument = DeclareLaunchArgument(
         'use_sim_time',
         default_value='true',
-        description='Use simulation/Gazebo clock')
+        description='Use simulation (gz sim) clock')
     declare_params_file_cmd = DeclareLaunchArgument(
         'params_file',
         default_value=default_params_file,

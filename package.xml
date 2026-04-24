@@ -3,7 +3,7 @@
 <package format="3">
   <name>articubot_one</name>
   <version>0.0.0</version>
-  <description>Articubot One robot description, bringup, navigation, and Gazebo simulation package.</description>
+  <description>Articubot One robot description, bringup, navigation, and Gazebo (gz sim) simulation package.</description>
   <maintainer email="my_email@email.com">Josh Newans</maintainer>
   <license>Apache-2.0</license>
 
