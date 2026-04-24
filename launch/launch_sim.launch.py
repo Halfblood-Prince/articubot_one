@@ -17,6 +17,9 @@ def generate_launch_description():
     package_share = FindPackageShare(package_name)
     world = LaunchConfiguration('world')
     use_ros2_control = LaunchConfiguration('use_ros2_control')
+    use_rviz = LaunchConfiguration('use_rviz')
+    use_slam = LaunchConfiguration('use_slam')
+    rviz_config = LaunchConfiguration('rviz_config')
 
     rsp = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
@@ -30,6 +33,14 @@ def generate_launch_description():
             os.path.join(get_package_share_directory(package_name), 'launch', 'joystick.launch.py')
         ]),
         launch_arguments={'use_sim_time': 'true'}.items()
+    )
+
+    slam = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(get_package_share_directory(package_name), 'launch', 'online_async_launch.py')
+        ]),
+        launch_arguments={'use_sim_time': 'true'}.items(),
+        condition=IfCondition(use_slam)
     )
 
     twist_mux_params = os.path.join(get_package_share_directory(package_name), 'config', 'twist_mux.yaml')
@@ -73,6 +84,15 @@ def generate_launch_description():
         output='screen'
     )
 
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        arguments=['-d', rviz_config],
+        parameters=[{'use_sim_time': True}],
+        output='screen',
+        condition=IfCondition(use_rviz)
+    )
+
     diff_drive_spawner = Node(
         package='controller_manager',
         executable='spawner',
@@ -110,14 +130,28 @@ def generate_launch_description():
             'use_ros2_control',
             default_value='true',
             description='Enable gz_ros2_control and controller spawners in simulation'),
+        DeclareLaunchArgument(
+            'use_rviz',
+            default_value='true',
+            description='Launch RViz alongside Gazebo'),
+        DeclareLaunchArgument(
+            'use_slam',
+            default_value='true',
+            description='Launch slam_toolbox for live map building'),
+        DeclareLaunchArgument(
+            'rviz_config',
+            default_value=PathJoinSubstitution([package_share, 'config', 'map.rviz']),
+            description='RViz config file to load'),
         SetEnvironmentVariable('GZ_SIM_RESOURCE_PATH', PathJoinSubstitution([package_share])),
         rsp,
         joystick,
+        slam,
         twist_mux,
         gazebo,
         spawn_entity,
         bridge,
         image_bridge,
+        rviz,
         delayed_diff_drive_spawner,
         delayed_joint_broad_spawner,
     ])
